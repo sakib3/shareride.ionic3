@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon color="dark" name="menu"></ion-icon>
+      </button>
+      <ion-title>
+          Share Ride
+      </ion-title>
+      <ion-buttons end>
+        <button ion-button clear (click)="logOut()">
+          <ion-icon color="danger" name="md-power"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="map-wrapper">
+      <map></map>
+  </div>
+</ion-content>

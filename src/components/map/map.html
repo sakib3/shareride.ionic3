@@ -1,0 +1,44 @@
+<!-- Generated template for the MapComponent component -->
+<div class="wrapper">
+
+  <ion-fab left style="bottom:10%">
+      <button ion-fab mini color="dark" (click)="renderCurrentLocation()">
+        <ion-icon name="md-locate"></ion-icon>
+      </button>
+  </ion-fab>
+
+  <!--    test perpose remove me when done -->
+  <ion-fab right style="bottom:10%">
+      <button ion-fab mini color="dark" (click)="findPostridesNearMe()">
+        <ion-icon name="md-eye"></ion-icon>
+      </button>
+  </ion-fab>
+
+
+  <ion-fab right top>
+      <button ion-fab mini color="dark" (click)="pickUpModal()"><ion-icon name="search"></ion-icon></button>
+  </ion-fab>
+
+  <ion-fab left top>
+      <button ion-fab mini color="dark" (click)="sharePostModal()"><ion-icon name="md-share"></ion-icon></button>
+  </ion-fab>
+
+  <ion-fab right top>
+    <span id="total" style="display:none">
+        <ion-list>
+            <ion-item>
+              <ion-icon name="ios-car" item-start></ion-icon>
+                <span id="totaldistance"></span>
+            </ion-item>
+            <ion-item>
+                <ion-icon name="ios-timer" item-start></ion-icon>
+                  <span id="totalduration"></span>
+            </ion-item>
+          </ion-list>
+    </span>
+  </ion-fab>
+
+  <div id="map">
+  </div>
+
+</div>

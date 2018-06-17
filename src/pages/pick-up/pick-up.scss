@@ -1,0 +1,25 @@
+page-pick-up {
+  .find-share{
+    padding: inherit;
+    float:right;
+    color: black;
+    -webkit-animation-name: glow; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 3s ; /* Safari 4.0 - 8.0 */
+    animation-name: glow;
+    animation-duration: 3s;
+    -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+    animation-iteration-count: infinite;
+  }
+  /* Safari 4.0 - 8.0 */
+@-webkit-keyframes glow {
+  from {color: black;}
+  to {color: grey;}
+}
+
+/* Standard syntax */
+@keyframes glow {
+  from {color: black;}
+  to {color: grey;}
+}
+
+}

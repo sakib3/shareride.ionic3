@@ -1,0 +1,198 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-grid>
+
+      <ion-row >
+        <ion-buttons left>
+          <button ion-button (click)="dismiss()">
+            <ion-icon color="dark" name="ios-backspace"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title>
+          Post Share Ride
+        </ion-title>
+      </ion-row>
+
+
+      <ion-row *ngIf="!showNext">
+        <ion-col col-1>
+          <ion-icon name="pin" color="dark" style="margin-top:70%" style="zoom:2.0;"></ion-icon>
+        </ion-col>
+        <ion-col col-11>
+         <input
+            id="source"
+            name="source"
+            style="border: 0;width:100%;padding: 10px;background:#E8E8E8;"
+            type="text"
+            placeholder="Where From"/>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="!showNext">
+        <ion-col col-1>
+          <ion-icon name="pin" color="dark" style="margin-top:70%" style="zoom:2.0;"></ion-icon>
+        </ion-col>
+        <ion-col col-11>
+          <input id="destination" name="destination" [(ngModel)]='model.to' style="border: 0;width:100%;padding: 10px;background:#E8E8E8;" type="text" (onfocus)="focusFunction('toActiveIcon')"
+            (onfocusout)="focusOutFunction('toActiveIcon')" placeholder="Where To" />
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="!showNext">
+        <ion-col col-1>
+        </ion-col>
+        <ion-col col-9>
+          <input id="stopover" name="stopover" style="border: 0;width:100%;padding: 10px;background:#E8E8E8;" type="text" (onfocus)="focusFunction('toActiveIcon')"
+            (onfocusout)="focusOutFunction('toActiveIcon')" placeholder="Add Stopover" />
+
+        </ion-col>
+        <ion-col col-2>
+          <ion-fab>
+            <button style="margin:0;" ion-fab mini color="light" (click)="addStopOver()">
+              <ion-icon name="md-add-circle"></ion-icon>
+            </button>
+          </ion-fab>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="!showNext">
+        <ion-col col-1></ion-col>
+        <ion-col col-11>
+          <ion-item>
+                <ion-label>Share as a</ion-label>
+                <ion-select [(ngModel)]="model.shareType">
+                  <ion-option value="driver">Driver</ion-option>
+                  <ion-option value="shareRide">Passenger</ion-option>
+                  <ion-option value="both">Driver / Passenger</ion-option>
+                </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="!showNext">
+        <ion-col col-1></ion-col>
+        <ion-col col-11>
+          <ion-item>
+                <ion-label>Journey frequency</ion-label>
+                <ion-select [(ngModel)]="model.journeyFrequency">
+                    <ion-option value="Regular">Regular</ion-option>
+                    <ion-option value="One-off">One-off</ion-option>
+                    <ion-option value="Custom schedule">Custom schedule</ion-option>
+                </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row *ngIf="!showNext">
+          <ion-col col-1></ion-col>
+          <ion-col col-11>
+            <button ion-button icon-right clear color="dark" (click)="next()">
+              Next&nbsp;<ion-icon name="arrow-forward" color="dark"></ion-icon>
+            </button>
+          </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="showNext">
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-11>
+            <ion-row><div style="font-size: larger">Days of travel</div></ion-row>
+            <ion-row>
+                <span *ngFor="let day of days">
+                  <ion-label>{{day.day}}</ion-label>
+                  <ion-checkbox color="dark" name="days" [(ngModel)]="day.checked"></ion-checkbox>
+                </span>
+            </ion-row>
+
+          </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="showNext">
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-11>
+            <ion-item>
+              <ion-label>Journey Date</ion-label>
+              <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="model.journeyDate"></ion-datetime>
+            </ion-item>
+          </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="showNext">
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-11>
+              <ion-item>
+                  <ion-toggle [(ngModel)]="isReturnDay" color="dark"></ion-toggle>
+                  <ion-label>
+                    Return Day
+                  </ion-label>
+                  <ion-icon name="repeat"></ion-icon>
+                </ion-item>
+          </ion-col>
+      </ion-row>
+
+
+      <ion-row *ngIf="isReturnDay && showNext">
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-11>
+            <ion-item>
+              <ion-label>Return Date</ion-label>
+              <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="model.returnDate"></ion-datetime>
+            </ion-item>
+          </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="showNext">
+          <ion-col col-1>
+            <!-- <ion-icon name="{{target.toActiveIcon}}" color="dark" style="margin-top:70%"></ion-icon> -->
+          </ion-col>
+          <ion-col col-4 style="padding-top: 10px;">
+            Rate SEK / Person
+          </ion-col>
+          <ion-col col-2>
+            <button ion-button color="dark" clear icon-left (click)="changeRate(-1)">
+              <ion-icon name="remove-circle"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col col-3>
+              <input id="rate" type="number" name="rate" style="height: 2.8em;font-size: 1.6rem;margin: 0.4rem 0.2rem;text-align: center;border: 0;width:100%;padding-top: 10px;background:#E8E8E8;" (onfocus)="focusFunction('toActiveIcon')"
+              (onfocusout)="focusOutFunction('toActiveIcon')" [(ngModel)]="rate" placeholder="" />
+          </ion-col>
+
+          <ion-col col-2>
+            <button ion-button color="dark" clear icon-right (click)="changeRate(1)">
+              <ion-icon name="add-circle"></ion-icon>
+            </button>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row *ngIf="showNext">
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-11>
+            <button ion-button icon-right clear color="dark" (click)="next()">
+              <ion-icon name="arrow-back" color="dark"></ion-icon>&nbsp;Back
+            </button>
+          </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <span id="selectedStopover">
+    <ion-chip style="margin:5px;" color="secondary" *ngFor="let stopover of stopOverArray">
+      <ion-label color="dark">{{stopover}}</ion-label>
+    </ion-chip>
+  </span>
+
+  <ion-fab right bottom>
+    <button ion-fab color="dark" (click)="onSubmit()">
+      Post
+    </button>
+  </ion-fab>
+</ion-content>
