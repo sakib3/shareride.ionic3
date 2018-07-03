@@ -39,7 +39,8 @@ export class ViewShareRidesPage {
     var self = this;
     self.loadingProvider.showLoading();
     self.api.setToken().then((token) => {
-      self.api.get('api/postRides')
+      //self.api.get('api/postRides')
+      self.api.get('api/postRides/nearCurrentLocation', {sourceLocation:[1,2]})
         .subscribe((res: any) => {
           self.models = res;
           self.loadingProvider.stopLoading();

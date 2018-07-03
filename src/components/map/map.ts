@@ -55,9 +55,22 @@ export class MapComponent implements OnInit {
           this.getCurrentLocation()
             .subscribe(location => {
               self.api.setToken().then((token) => {
-                self.api.post('api/postRides/nearCurrentLocation', {sourceLocation:[location.longitude,location.latitude]})
+                self.api.post('api/postRides/nearCurrentLocation2', {sourceLocation:[location.longitude,location.latitude]})
                   .subscribe((res: any) => {
-                    alert(JSON.stringify(res));
+
+                    //alert(JSON.stringify(res));
+
+                    var currentPosition = new google.maps.LatLng(location.latitude, location.longitude);
+                    var locations = res.map((r)=> new google.maps.LatLng(r.sourceLocation[1], r.sourceLocation[0]));
+                    var icon =  "https://developers.google.com/maps/documentation/javascript/images/circle.png";
+                    //var self = this;
+                    self.drawCustomCircle(currentPosition,self.map,icon);
+                    locations.forEach(l => self.drawCustomMarker(l,self.map,icon));
+
+
+
+
+
                   }, (err) => {
                     console.log('error ', err._body)
                   });
@@ -123,7 +136,7 @@ export class MapComponent implements OnInit {
     let mapEl = document.getElementById("map");
     let mapOptions = {
           center: new google.maps.LatLng(location.latitude, location.longitude),
-          zoom: 15,
+          zoom: 11,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           disableDefaultUI: true
     }
@@ -136,6 +149,18 @@ export class MapComponent implements OnInit {
       map: map
     }
     new google.maps.Marker(markerOption);
+  }
+
+  drawCustomCircle(location, map, icon){
+    new google.maps.Circle({
+      center: location,
+      map: map,
+      radius: 5000, // in meters
+      strokeOpacity: 0.1,
+      strokeWeight: 1,
+      fillColor: "#00F00F",
+      fillOpacity: 0.2
+    });
   }
 
   drawCustomMarker(location, map, icon){
@@ -223,7 +248,7 @@ export class MapComponent implements OnInit {
 
   getMapOptions(): any {
     return {
-      zoom: 15,
+      zoom: 11,//15
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       zoomControl: true,
       scaleControl: true,
@@ -339,7 +364,7 @@ getRandomRange(min,max){
 
     let mapOptions = {
       center: location,
-      zoom: 15,
+      zoom: 11, //15
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true
     }
